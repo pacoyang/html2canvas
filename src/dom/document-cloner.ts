@@ -30,6 +30,7 @@ export interface CloneOptions {
 export type CloneConfigurations = CloneOptions & {
     inlineImages: boolean;
     copyStyles: boolean;
+    waitFonts: boolean;
 };
 
 const IGNORE_ATTRIBUTE = 'data-html2canvas-ignore';
@@ -93,7 +94,7 @@ export class DocumentCloner {
                 return Promise.reject(`Error finding the ${this.referenceElement.nodeName} in the cloned document`);
             }
 
-            if (documentClone.fonts && documentClone.fonts.ready) {
+            if (documentClone.fonts && documentClone.fonts.ready && this.options.waitFonts) {
                 await documentClone.fonts.ready;
             }
 

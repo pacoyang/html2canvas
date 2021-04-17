@@ -15,6 +15,7 @@ export type Options = CloneOptions &
         foreignObjectRendering: boolean;
         logging: boolean;
         removeContainer?: boolean;
+        waitFonts: boolean;
     };
 
 const parseColor = (value: string): Color => color.parse(Parser.create(value).parseComponentValue());
@@ -61,6 +62,7 @@ const renderElement = async (element: HTMLElement, opts: Partial<Options>): Prom
         cache: opts.cache ? opts.cache : CacheStorage.create(instanceName, resourceOptions),
         logging: true,
         removeContainer: true,
+        waitFonts: true,
         foreignObjectRendering: false,
         scale: defaultView.devicePixelRatio || 1,
         windowWidth: defaultView.innerWidth,
@@ -85,7 +87,8 @@ const renderElement = async (element: HTMLElement, opts: Partial<Options>): Prom
         onclone: options.onclone,
         ignoreElements: options.ignoreElements,
         inlineImages: options.foreignObjectRendering,
-        copyStyles: options.foreignObjectRendering
+        copyStyles: options.foreignObjectRendering,
+        waitFonts: options.waitFonts
     });
     const clonedElement = documentCloner.clonedReferenceElement;
     if (!clonedElement) {
